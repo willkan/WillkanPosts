@@ -6,8 +6,8 @@ WillkanPosts
 ##添加文章步骤
 在`app/_post`中添加你的markdown文件
 
-* 若要在markdown文件中添加子表题,在需要插入子表题处输入**{{{md-sub subs.sub`N`}}}**
-* 若要在markdown文件中添加demo, 在需要显示demo处输入**{{{code plugins.code`N`}}}**demo应符合CMD模块且返回数据格式应为
+* 若要在markdown文件中添加子表题,在需要插入子表题处输入__{{{md-sub subs.sub`N`}}}__
+* 若要在markdown文件中添加demo, 在需要显示demo处输入__{{{code plugins.code`N`}}}__demo应符合CMD模块且返回数据格式应为
    ```javascript
    {
        html: 'some string',
