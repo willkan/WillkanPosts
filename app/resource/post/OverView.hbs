@@ -1,0 +1,40 @@
+<section data-magellan-destination="{{href}}">
+    <a name="{{href}}"></a>
+    <div class="markdown">
+        <h2>概述</h2>
+<h3>为什么写这篇文章</h3>
+<p>接触前端一年了，瞎摸过来这么久一直很希望看到一个完整的前端构建流程，遗憾没找到相关文章，所以自己在做这个网页的时候顺便纪录下来自己从架构到部署的整个过程。</p>
+<h3>这是个什么网页</h3>
+<p>我一直希望有个网站可以让我用markdown写文章，并且可以在markdown中插入自己的demo（不是源码），于是就做了这么个网页让我可以轻松发布自己的文章。</p>
+<h3>使用资源分析</h3>
+<p>网上前端资源非常丰富，做一个网页完全没必要重复造轮子，下面是我做这个网页用到的工具及其分析。</p>
+<ol>
+<li><p>响应式css框架：Foundation 4
+很多人听到响应式会第一时间想到Bootstrap，但在网上查询后我发现很多人再说Bootstrap在移动端的性能并不好，甚至会拖慢应用，很大一部分原因是因为Bootstrap只采用jQuery这么个在移动端上并不太适合的库。而Foundation4在移动端采用Zepto，并且采用mobile first概念（就是说首先为小屏幕设计，随着屏幕逐渐增大，层次越复杂，可以和&quot;渐进增强&quot;类比）。
+Bootstrap和Foundation的详细对比大家可以参见<a href="http://abetteruserexperience.com/2013/05/twitter-bootstrap-vs-foundation-4-which-one-is-right-for-you/">twitter-bootstrap-vs-foundation-4-which-one-is-right-for-you</a>（注意，这里比较的Bootstrap版本还比较老）
+感觉Foundation 4 在国内使用群还比较少，所以教程还是参见官网吧。
+但是有一点比较奇怪的是Foundation 4的官方<a href="http://foundation.zurb.com/docs/">Docs</a>在我的移动设备上仍会卡顿。是html文件太大？还是Foundation 4的css太臃肿？ 在之后真正进入开发时我会作出对比。</p>
+</li>
+<li><p>DOM操作库：Zepto
+为什么选择Zepto？因为Zepto性能比其他DOM操作库在webkit上表现好太多了。而webkit又是IOS和Android上主力的浏览器核心。部分dom操作性能对比请查看<a href="http://jsperf.com/jqm3/103">http://jsperf.com/jqm3/103</a></p>
+</li>
+<li><p>模板解释引擎：HandleBars
+其他模版引擎也可以，只是这里我比较喜欢Handlebars而已。模版解释的好处在于不再需要再写大量而不清晰的js插入dom结构语句。此外，我将回用Handlebars往markdown解析后的文件中插入demo。</p>
+</li>
+<li><p>前端模块化：seajs
+要么requirejs，要么seajs，为啥选seajs，请查看seajs处的解释
+架构工具：yeoman</p>
+</li>
+<li><p>提高开发效率和规范
+移动端动画：采用css3动画实现页面切换而不是传统的setTimeOut调整dom的样式，</p>
+</li>
+<li><p>css预编译：Sass
+因为用到了foundation 4，而foundaton 4 官方版本又拥有Sass版本，所以用上了Sass</p>
+</li>
+<li><p>测试：CasperJS
+感觉上mocha,jasmine更偏向于本地纯js调试，而CasperJS这基于PhantomJS的工具则更适合浏览器调试</p>
+</li>
+</ol>
+
+    </div>
+</section>

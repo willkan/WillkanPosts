@@ -1,0 +1,24 @@
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/willkan\/develop\/MySinglePageApps-Seajs\/Workflow\/app\/resource\/scss\/demo\.scss}line{font-family:\000031}}
+.demo {
+  width: 100%;
+  border: 2px solid #abc;
+  padding: emCalc(5);
+  box-sizing: border-box;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: emCalc(200);
+  -webkit-overflow-scrolling: touch;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/willkan\/develop\/MySinglePageApps-Seajs\/Workflow\/app\/resource\/scss\/demo\.scss}line{font-family:\0000311}}
+.demo::-webkit-scrollbar {
+  display: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/willkan\/develop\/MySinglePageApps-Seajs\/Workflow\/app\/resource\/scss\/demo\.scss}line{font-family:\0000314}}
+.demo * {
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}

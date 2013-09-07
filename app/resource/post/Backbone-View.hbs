@@ -1,0 +1,103 @@
+<section data-magellan-destination="{{href}}">
+    <a name="{{href}}"></a>
+    <div class="markdown">
+        <h2>关于Backbone的View</h2>
+<p>1、MV间的调用是在V的实例中设置一个属性可以访问M的实例，可以在<code>initialize</code>中设置，如<code>this.model = new Model()</code>，也可以在传值时设置，如</p>
+<pre><code class="lang-javascript">
+    <span class="keyword">var</span> testView = Backbone.View.extend(
+        {
+            model: <span class="keyword">new</span> Model()
+        }
+    );</code></pre>
+<p>，也可以在实例化该View时传入参数，如<code>var todo = new TodoView({model: new Model()});</code></p>
+<p>2、在<code>initialize</code>中通过<code>listenTo</code>把Model的事件绑定到View中的处理函数上实现MV同步</p>
+<p>3、View中dom的事件绑定写在View</p>
+<p>4、<code>initialize</code>中记得写下<code>_.bindAll(this, &#39;func1&#39;, &#39;func2&#39;)</code>，使<code>func1</code>，<code>func2</code>的函数上下文为this</p>
+<p>5、尽量通过template进行渲染</p>
+<p>6、<code>render</code>函数返回<code>this</code></p>
+<p>7、 实例化View时传入参数可以设置该实例的属性，若参数中的属性不存在于默认View实例中，则添加该属性至该实例中</p>
+<p>{{{md-sub subs.sub1}}}
+送上Demo:</p>
+<p>{{{code plugins.plugin1}}}</p>
+<p>demo源码</p>
+<pre><code class="lang-javascript">    <span class="function"><span class="keyword">function</span> <span class="title">demo</span><span class="params">()</span>{</span>
+
+        <span class="comment">//models</span>
+        <span class="keyword">var</span> User = Backbone.Model.extend({
+            defaults:{
+                name: <span class="string">'user0'</span>
+            }
+        });
+
+        <span class="comment">//collections</span>
+        <span class="keyword">var</span>  Users = Backbone.Collection.extend({
+            localStorage: <span class="keyword">new</span> Backbone.LocalStorage(<span class="string">'Users'</span>),
+            model: User,
+            initialize: <span class="keyword">function</span>(){
+                window.localStorage.getItem(<span class="string">'Users'</span>) || <span class="keyword">this</span>.localStorage.save();
+            }
+        });
+
+        <span class="comment">//views</span>
+        <span class="keyword">var</span> UserView = Backbone.View.extend({
+            el: $(<span class="string">'#box'</span> + id),
+
+            initialize: <span class="keyword">function</span>(){
+                <span class="comment">//bind this to function</span>
+                console.log(<span class="keyword">this</span>.el);
+                _.bindAll(<span class="keyword">this</span>, <span class="string">'render'</span>, <span class="string">'addItem'</span>);
+
+                <span class="keyword">this</span>.demo = $(<span class="keyword">this</span>.el).find(<span class="string">'#demo'</span> + id);
+                <span class="keyword">this</span>.collection = <span class="keyword">new</span> Users();
+                <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>.collection, <span class="string">'remove'</span>, <span class="keyword">this</span>.render);
+                <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>.collection, <span class="string">'add'</span>, <span class="keyword">this</span>.render);
+                <span class="keyword">this</span>.collection.fetch();
+
+                <span class="keyword">var</span> mobile = $.os.phone || $.os.tablet || <span class="literal">false</span>;
+
+                <span class="comment">//移动设备绑定tap事件，其他绑定click事件</span>
+                <span class="keyword">this</span>.events[(mobile ? <span class="string">'tap'</span> : <span class="string">'click'</span>) + <span class="string">' #add'</span>] = <span class="keyword">this</span>.addItem;
+                <span class="keyword">this</span>.events[(mobile ? <span class="string">'tap'</span> : <span class="string">'click'</span>) + <span class="string">' #clear'</span>] = <span class="keyword">this</span>.clear;
+            },
+
+            template: <span class="keyword">function</span>(options){
+                <span class="keyword">var</span> result = <span class="string">''</span>;
+                _.each(options.models, <span class="keyword">function</span>(value, key){
+                    console.log(value.get(<span class="string">'name'</span>));
+                    result += <span class="string">'&lt;span&gt;'</span> + value.attributes.name + <span class="string">'&lt;/span&gt; '</span>;
+                });
+                console.log(result);
+                <span class="keyword">return</span> result;
+            },
+
+            render: <span class="keyword">function</span>(){
+                <span class="keyword">this</span>.demo.html(<span class="keyword">this</span>.template(<span class="keyword">this</span>.collection));
+                <span class="keyword">return</span> <span class="keyword">this</span>;
+            },
+
+            events: {
+                <span class="comment">/* dom事件监听应写在这
+                'tap #add': 'addItem',
+                'click #add': 'addItem',
+                'click #clear': 'clear',
+                'tap #clear': 'clear'
+                */</span>
+            },
+
+            addItem: <span class="keyword">function</span>(){
+                <span class="keyword">this</span>.collection.create({
+                    name: <span class="string">'user'</span> + (<span class="keyword">this</span>.collection.length + <span class="number">1</span>)
+                });
+                console.log(<span class="string">'collection add'</span>);
+            },
+
+            clear: <span class="keyword">function</span>(){
+                <span class="comment">//collection中的model被destroy时会触发collection的remove事件</span>
+                _.invoke(<span class="keyword">this</span>.collection.toArray(), <span class="string">'destroy'</span>);
+            }
+        });
+        <span class="keyword">new</span> UserView();
+    }</code></pre>
+
+    </div>
+</section>

@@ -1,0 +1,16 @@
+{
+  "name": "workflow",
+  "version": "0.0.0",
+  "dependencies": {
+    "underscore": "~1.4.3",
+    "backbone": "~1.0.0",
+    "requirejs": "~2.1.5",
+    "requirejs-text": "~2.0.5",
+    "modernizr": "~2.6.2",
+    "foundation": "~4.3.1",
+    "handlebars": "~1.0.0",
+    "q": "~0.9.6",
+    "backbone.localStorage": "~1.1.6"
+  },
+  "devDependencies": {}
+}

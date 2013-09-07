@@ -1,0 +1,80 @@
+@import "animate";
+@import "myFunction";
+aside{
+  $bgcolor: rgba(20,20,20,0.6);
+  $bgcolor-deeper: rgba(20,20,20,0.4);
+  $bgcolor-deepest: rgba(20,20,20,1);
+  height: 100%;
+  z-index: 50;
+  text-indent: emCalc(10);
+  visibility: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  @include to3D;
+  a{
+    display: block;
+  }
+  .title{
+    border-top: 3px solid #ccc;
+    background: $bgcolor-deeper;
+    padding: emCalc(4) 0;
+    a{
+      color: white;
+    }
+  }
+  .subtitle{
+    color:#2ba6cb;
+    background: $bgcolor-deeper;
+    a:hover{
+      color:#2ba6cb;
+    }
+  }
+  li{
+    list-style: none;
+    padding: emCalc(2) 0 emCalc(4);
+    border-top: 1px solid #aaa;
+    text-indent: 2em;
+  }
+  .active, li:hover, .title:hover{
+    background: $bgcolor-deepest;
+  }
+  .active{
+    font-weight: bold;
+  }
+  &[data-magellan-expedition] {
+    z-index: 50;
+    min-width: 0;
+    background: $bgcolor;
+    padding: 0;
+  }
+  &::-webkit-scrollbar{
+    display: none;
+  }
+}
+
+.show-aside{
+  visibility: visible;
+}
+
+.nav-btn{
+  &:before{
+    color: white;
+    content: "\2261";
+  }
+  &:hover{
+    background: rgba(0,0,0,0.7);
+  }
+
+  background: rgba(0,0,0,0.4);
+  border: none;
+  padding: 0;
+  margin: emCalc(-34) 0;
+  position: fixed;
+  box-sizing: border-box;
+  width: 34px;
+  height: 34px;
+  top: 50%;
+  right: 0;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  z-index: 51;
+}

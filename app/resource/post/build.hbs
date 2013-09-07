@@ -1,0 +1,143 @@
+<section data-magellan-destination="{{href}}">
+    <a name="{{href}}"></a>
+    <div class="markdown">
+        <h2>部署</h2>
+<p>经过上面的步骤,网站的组织已经比较清晰,再编辑完网页所有功能后,进入下一步----部署.</p>
+<p>yeoman配置的<code>Gruntfile.js</code>并不能适应所有自动化,我们需要对其进行适当修改.</p>
+<p>先来看看我的<code>grunt build</code>执行了哪些任务</p>
+<pre><code class="lang-javascript">   grunt.registerTask(<span class="string">'build'</span>, [
+        <span class="string">'clean:dist'</span>,<span class="comment">//清空临时目录</span>
+        <span class="string">'compass:dist'</span>,<span class="comment">//编译SCSS</span>
+        <span class="string">'markdown'</span>,<span class="comment">//将markdown转换为handlebars模板格式</span>
+        <span class="string">'handlebars:markdown'</span>,<span class="comment">//预编译handlebars</span>
+        <span class="string">'handlebars:compile'</span>,<span class="comment">//预编译handlebars</span>
+        <span class="string">'concat:template'</span>,<span class="comment">//连接handlebars预编译后的文件以及助手</span>
+        <span class="string">'wrap:template'</span>,<span class="comment">//对连接后的文件进行CMD封装</span>
+        <span class="string">'transport:seajs'</span>,<span class="comment">//获取CMD模块ID</span>
+        <span class="string">'concat:seajs'</span>,<span class="comment">//连接CMD模块</span>
+        <span class="string">'uglify:seajs'</span>,<span class="comment">//压缩CMD模块连接而成的文件</span>
+        <span class="string">'useminPrepare'</span>,
+        <span class="string">'imagemin'</span>,<span class="comment">//压缩图像</span>
+        <span class="string">'htmlmin'</span>,<span class="comment">//压缩html文件</span>
+        <span class="string">'cssmin'</span>,<span class="comment">//压缩css</span>
+        <span class="string">'copy'</span>,<span class="comment">//将没处理过而网站又需要的文件拷贝过来</span>
+        <span class="string">'rev'</span>,<span class="comment">//为css和js添加版本号</span>
+        <span class="string">'usemin'</span>
+    ]);</code></pre>
+<p><code>usemin</code>的作用请看官方说明</p>
+<blockquote>
+<p>Replaces references to non-optimized scripts or stylesheets into a set of HTML files (or any templates/views).</p>
+</blockquote>
+<p>屌丝翻译:替换HTML文件(或任意模板文件)的引用</p>
+<p>举个例子,<code>main.css</code>经处理后变成<code>main-rev.css</code>,usemin就是把html中引用到<code>main.css</code>的地方都改为<code>main-rev.css</code></p>
+<p>{{{md-sub subs.sub1}}}</p>
+<h3>连接CMD模块</h3>
+<p>这里我只讲述文档比较少的transport和concat,这两个任务分别用到了<code>grunt-cmd-transport</code>和<code>grunt-cmd-concat</code></p>
+<h4>transport</h4>
+<p>对于为分配ID的CMD模块,我们首先使用<code>grunt-cmd-transport</code>抽取其ID,先上代码</p>
+<pre><code class="lang-javascript">        transport: {
+            seajs: {
+                options: {
+                    alias: {
+                        underscore: <span class="string">'underscore'</span>,
+                        backbone: <span class="string">'backbone'</span>,
+                        $: <span class="string">'$'</span>,
+                        modernizr: <span class="string">'modernizr'</span>
+                    },
+                    paths: [
+                        <span class="string">'app/public/scripts/example/static'</span>,
+                        <span class="string">'app/public/scripts/sea-modules'</span>,
+                        <span class="string">'.build'</span>
+                    ]
+                },
+                files: [
+                    {
+                        cwd: <span class="string">'app/public/scripts/example'</span>,
+                        src: [
+                            <span class="string">'static/{,*/,*/*/}*.js'</span>,
+                            <span class="string">'templates/*.js'</span>,
+                            <span class="string">'utils/*.js'</span>,
+                            <span class="string">'logic/*.js'</span>
+                        ],
+                        dest: <span class="string">'.build'</span>
+                    }
+                ]
+            }
+        }</code></pre>
+<ul>
+<li><p>解释一下options</p>
+<ul>
+<li><p><code>alias</code>可以指向一个文件也可以指向自定义的别名,alias中的键值对(假设为<code>key:value</code>)的表示需要处理的文件中若含有<code>require(&#39;key&#39;)</code>则用<code>require(&#39;value&#39;)</code>来代替</p>
+</li>
+<li><p><code>paths</code>是一个数组,表示需要用到的模块路径,例如处理的文件中需要<code>require(&#39;logic&#39;)</code>,而logic模块并不在默认路径中,则需要在<code>paths</code>中添加logic模块所在的路径<em>(注意,此处应把<code>file.dest</code>指向的路径也添加进去)</em></p>
+</li>
+<li><p><code>idleading</code>我们可以用这属性给所有抽取的ID添加一个前缀</p>
+</li>
+</ul>
+</li>
+<li><p>然后是抽取</p>
+<ul>
+<li>抽取顺序和<code>file.src</code>这数组的顺序相同</li>
+<li>若模块a依赖模块b,则必须先抽取b再抽取a</li>
+<li>抽取到<code>file.dest</code>指向的路径下</li>
+</ul>
+</li>
+<li><p>模块ID的命名方式</p>
+<p>ID名字 = options.idleading + 文件相对CWD路径</p>
+<p>例如</p>
+<p>假设无idleading,cwd为&#39;app/build/scripts&#39;,dest为&#39;.build&#39;,文件相对路径为&#39;logic/a&#39;则ID名字是&#39;logic/a&#39;,抽取出来的目录结构是</p>
+<pre><code><span class="string">.</span><span class="comment">build</span>
+  <span class="comment">|</span>-<span class="literal">-</span><span class="comment">logic</span>
+       <span class="comment">|</span>-<span class="literal">-</span><span class="comment">a</span>.<span class="comment">js</code></pre>
+<h4>concat</h4>
+<p>模块抽取完后就要开始进行连接.还是先上代码</p>
+<pre><code class="lang-javascript">       concat: {
+          seajs: {
+              options: {
+                  relative: <span class="literal">true</span>,
+                  include: <span class="string">'all'</span>,
+                  paths: [
+                      <span class="string">'app/public/scripts/sea-modules'</span>,
+                      <span class="string">'app/public/scripts/example/static'</span>,
+                      <span class="string">'.build'</span>
+                  ]
+              },
+              files: {
+                  <span class="string">'dist/public/scripts/main.js'</span>: [<span class="string">'.build/{,*/,*/*/}*.js'</span>]
+              }
+          }
+      }</code></pre>
+<p>options的<code>paths</code>解释和transport的<code>options.paths</code>一样</p>
+</li>
+</ul>
+<p>{{{md-sub subs.sub2}}}</p>
+<h3>部署优先策略</h3>
+<p>这是我自己应用的一个策略,也就是尽量保证一步部署,不再对部署后的文件上进行手工修改</p>
+<p>usemin并不会对seajs的引用进行修改,为了实现部署优先,我们在index.html应采用下面方式</p>
+<pre><code class="lang-html">    <span class="comment">&lt;!-- 引入seajs --&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"public/scripts/sea-modules/seajs/seajs/2.1.1/sea.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+    <span class="comment">&lt;!-- 引入seajs配置文件 --&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"public/scripts/config.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+    <span class="comment">&lt;!-- 引入seajs合并后的文件, 路径为合并后的文件相对路径 --&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"public/scripts/main.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+    <span class="comment">&lt;!-- 调用启动模块 --&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
+        seajs.use([<span class="string">'modernizr'</span>,<span class="string">'logic/load-markdown'</span>]);
+    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
+<p>解释一下引入合并后的文件的原因:</p>
+<ul>
+<li>合并后的文件在开发调试时并不存在,调用该文件对开发不会造成任何影响</li>
+<li>合并后的文件并不符合CMD模块,只是一系列CMD模块的定义</li>
+</ul>
+<p>解释一下部署后的调用启动模块</p>
+<ul>
+<li>引入合并后的文件并不会执行模块中任何函数</li>
+<li><p>当引入合并后的文件时,会对一系列CMD模块进行define,define过程应该是这样的:</p>
+<p>若define()的参数中含有ID,则先对ID进行路径解释,把解释后的路径添加到<code>seajs.cache</code>中</p>
+</li>
+<li>seajs调用模块时会先去查看<code>seajs.cache</code>中是否含有解释后的路径,若有,则直接调用该路径对应的模块,若无则想服务器获取该模块</li>
+<li>seajs.use()调用模块的相对路径不是base,而是html所在路径.而只有调用的模块路径的解释路径和模块ID的解释路径相同才能正确调用, 为了部署优先,最好为启动模块设置顶级标识,应为顶级标识才能在<code>seajs.use</code>和<code>require</code>时获得相同的解释路径</li>
+</ul>
+
+    </div>
+</section>

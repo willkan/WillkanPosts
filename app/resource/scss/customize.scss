@@ -1,0 +1,14 @@
+// Make sure the charset is set appropriately
+@charset "UTF-8";
+
+// This includes all of the foundation global elements that are needed to work with any of the other files.
+@import "foundation/_variables";
+
+// Foundation Components
+@import "foundation/components/_global";
+@import "foundation/components/_grid";
+@import "foundation/components/_type";
+@import "foundation/components/_visibility";
+@import "foundation/components/_buttons";
+@import "foundation/components/_magellan";
+

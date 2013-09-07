@@ -1,0 +1,87 @@
+<section data-magellan-destination="{{href}}">
+    <a name="{{href}}"></a>
+    <div class="markdown">
+        <h2>项目初始化</h2>
+<p>{{{md-sub subs.sub1}}}</p>
+<h3>yeoman是什么</h3>
+<p>工具选好了之后，我们开始构建项目了。首先介绍一下yeoman，借用一下<a href="http://www.infoq.com/cn/news/2012/09/yeoman">infoq</a>上的介绍：</p>
+<blockquote>
+<p>Yeoman是由Paul Irish、Addy Osmani、Sindre Sorhus、Mickael Daniel、Eric Bidelman和Yeoman社区共同开发的一个项目。它旨在为开发者提供一系列健壮的工具、程序库和工作流，帮助他们快速构建出漂亮、引人注目的Web应用。Yeoman拥有如下特性：</p>
+<ul>
+<li>快速创建骨架应用程序——使用可自定义的模板（例如：HTML5、Boilerplate、Twitter Bootstrap等）、AMD（通过RequireJS）以及其他工具轻松地创建新项目的骨架。</li>
+<li>自动编译CoffeeScrip和Compass——在做出变更的时候，Yeoman的LiveReload监视进程会自动编译源文件，并刷新浏览器，而不需要你手动执行。</li>
+<li>自动完善你的脚本——所有脚本都会自动针对jshint（软件开发中的静态代码分析工具，用于检查JavaScript源代码是否符合编码规范）运行，从而确保它们遵循语言的最佳实践。</li>
+<li>内建的预览服务器——你不需要启动自己的HTTP服务器。内建的服务器用一条命令就可以启动。</li>
+<li>非常棒的图像优化——Yeoman使用OptPNG和JPEGTran对所有图像做了优化，从而你的用户可以花费更少时间下载资源，有更多时间来使用你的应用程序。</li>
+<li>生成AppCache清单——Yeoman会为你生成应用程序缓存的清单，你只需要构建项目就好。</li>
+<li>“杀手级”的构建过程——你所做的工作不仅被精简到最少，让你更加专注，而且Yeoman还会优化所有图像文件和HTML文件、编译你的CoffeeScript和Compass文件、生成应用程序的缓存清单，如果你使用AMD，那么它还会通过r.js来传递这些模块。这会为你节省大量工作。</li>
+<li>集成的包管理——Yeoman让你可以通过命令行（例如，yeoman搜索查询）轻松地查找新的包，安装并保持更新，而不需要你打开浏览器。</li>
+<li>对ES6模块语法的支持——你可以使用最新的ECMAScript 6模块语法来编写模块。这还是一种实验性的特性，它会被转换成eS5，从而你可以在所有流行的浏览器中使用编写的代码。</li>
+<li>PhantomJS单元测试——你可以通过PhantomJS轻松地运行单元测试。当你创建新的应用程序的时候，它还会为你自动创建测试内容的骨架。</li>
+</ul>
+</blockquote>
+<p>{{{md-sub subs.sub2}}}</p>
+<h3>使用yeoman</h3>
+<h4>安装yeoman</h4>
+<p>yeoman是基于node.js，首先得安装node.js，然后在命令行中安装yeoman</p>
+<pre><code><span class="title">npm</span> install -g yo grunt-cli bower</code></pre>
+<p><em>mac或linux下npm安装到全局需要root权限</em></p>
+<h4>使用yeoman</h4>
+<h5>yo</h5>
+<p>yo用于构建项目的手足架。</p>
+<p>刚安装完的yeoman（1.0版本）中是不含模版的，我先去找了个模版generator-backbone</p>
+<pre><code><span class="title">npm</span> install -g generator-backbone</code></pre>
+<p>然后使用该模版开始构建</p>
+<pre><code><span class="title">mkdir</span> myapps
+<span class="title">cd</span> myapps
+<span class="title">yo</span> bakcbone myapps</code></pre>
+<p>命令行提示是否使用twitter和coffeejs，该项目中都用不到，所以都不选</p>
+<p>此时myapps的目录结构如下</p>
+<p><img src="/public/images/yeoman1.png" alt="修改前"></p>
+<p>但该架构并不完全满足我的需求，于是我进行了手动修改，修改后结构如下</p>
+<p><img src="/public/images/yeoman2.png" alt="修改前"></p>
+<p>yo的使用基本结束。</p>
+<p>之后本文提到的路径都是<code>myapps</code>的相对路径</p>
+<h5>bower</h5>
+<p>bower用于载入网页需要的组件</p>
+<p>由于目录变更，我们需要修改bower的路径，bower的路径在<code>.bowerrrc</code>文件中，将其内容改为</p>
+<pre><code class="lang-json">{
+    "<span class="attribute">directory</span>": <span class="value"><span class="string">"app/public/bower_components"</span>
+}</span></code></pre>
+<p><code>bower.json</code>文件是用来描述需要载入的组件</p>
+<h5>grunt</h5>
+<p>grunt用于自动化，例如编译scss文件，编译coffe文件，部署等。</p>
+<p>因为myapps的目录修改过,所以<code>Gruntfile.js</code>中的相关路径也得修改。</p>
+<p>后面的开发中会大量用到grunt，此处先提一下grunt的一些个人经验</p>
+<ul>
+<li><p>yeoman预置的Gruntfile.js很聪明，已设置为从<code>package.json</code>读取grunt插件并注册，只需修改此文件并执行 <code>npm install</code>,即可注册grunt的插件。</p>
+</li>
+<li><p>在<code>grunt.initConfig()</code>中我们可以配置各种子任务，例如</p>
+<pre><code class="lang-javascript">  grunt.initConfig({
+      copy: {
+                  dist: {
+                      files: [{
+                          expand: <span class="literal">true</span>,
+                          dot: <span class="literal">true</span>,
+                          cwd: <span class="string">'&lt;%= yeoman.app %&gt;'</span>,
+                          dest: <span class="string">'&lt;%= yeoman.dist %&gt;'</span>,
+                          src: [
+                              <span class="string">'*.{ico,txt}'</span>,
+                              <span class="string">'.htaccess'</span>,
+                              <span class="string">'images/{,*/}*.{webp,gif}'</span>
+                          ]
+                      }]
+                  }
+              }
+
+  })</code></pre>
+<p>  然后通过<code>grunt.registerTask()</code>来注册任务，例如</p>
+<pre><code class="lang-javascript">  grunt.registerTask(<span class="string">'default'</span>, [
+       <span class="string">'copy:dist'</span>, <span class="comment">//执行copy下的dist子任务，</span>
+       <span class="string">'copy'</span> <span class="comment">//执行copy下所有任务，执行顺序为定义时的顺序</span>
+  ])</code></pre>
+</li>
+</ul>
+
+    </div>
+</section>

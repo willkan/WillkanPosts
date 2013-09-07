@@ -1,0 +1,14 @@
+{
+  "name": "animate.scss",
+  "homepage": "https://github.com/jackilyn/animate.scss",
+  "_release": "c03607f922",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "c03607f922850b5c2d1da1ec45e5d56f4e4403ab"
+  },
+  "_source": "git://github.com/jackilyn/animate.scss.git",
+  "_target": "*",
+  "_originalSource": "jackilyn/animate.scss",
+  "_direct": true
+}

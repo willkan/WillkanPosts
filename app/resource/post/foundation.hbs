@@ -1,0 +1,105 @@
+<section data-magellan-destination="{{href}}">
+    <a name="{{href}}"></a>
+    <div class="markdown">
+        <h2>HTML和CSS框架</h2>
+<p>{{{md-sub subs.sub1}}}</p>
+<h3>Foundation4</h3>
+<p>Foundation 4是一个CSS框架，有CSS版本和SCSSS版本，都可以在<a href="http://foundation.zurb.com/download.php">官网</a>获得。</p>
+<p>直接上我的html代码先</p>
+<pre><code class="lang-html">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"row"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"small-12 large-9 columns"</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">h1</span>&gt;</span>
+                前端工作流程
+            <span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">hr</span>/&gt;</span>
+            <span class="tag">&lt;<span class="title">article</span>&gt;</span><span class="tag">&lt;/<span class="title">article</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"hide-for-medium hide-for-large nav-btn"</span>&gt;</span><span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">aside</span> <span class="attribute">class</span>=<span class="value">"hide-for-small small-6 large-3 columns"</span> <span class="attribute">data-magellan-expedition</span>=<span class="value">"fixed"</span>&gt;</span><span class="tag">&lt;/<span class="title">aside</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></code></pre>
+<p>这里解释一下Foundation的栅栏表格。</p>
+<ul>
+<li><code>columns</code>表示行，<code>row</code>表示列</li>
+<li><p><code>.columns</code>元素必须得是<code>.row</code>的后继元素</p>
+</li>
+<li><p>默认版本的Foundation中，把行分成12份，使用如下：</p>
+<ul>
+<li><code>small-1</code>表示该列宽度占最近<code>.row</code>祖先元素的1/12</li>
+<li><code>small-3</code>表示该列宽度占最近<code>.row</code>祖先元素的3/12</li>
+<li><code>small-3 large-4</code>表示该列宽度在小屏幕中占3/12,在大屏幕中占4/12</li>
+<li>上述例子中的<code>small</code>,<code>large</code>表示屏幕大小，可在<code>_global.scss</code>中找到定义，可以在该文件中搜索关键字<code>$small-screen</code></li>
+</ul>
+</li>
+</ul>
+<p>Foundation的css使用就解释到这，更多请查看<a href="http://foundation.zurb.com/docs/">API</a></p>
+<p>然后来看看Foundation的js插件部分,foundation依赖于zepto或jQuery,引入其他插件前需要先引入<code>foundation.js</code></p>
+<p>若使用zepto请注意zepto是可定制的,foundation使用的是他自己定制的zepto,所以请使用<code>foundation/js/vendor/zepto.js</code></p>
+<p>{{{md-sub subs.sub2}}}</p>
+<h3>SCSS</h3>
+<p>鉴于SCSS的方便，我采用了SCSS版本。这就带来了个问题，每次都要编译才能被浏览器解释。grunt这时候就起作用了。</p>
+<p>首先说一下我SCSS的配置</p>
+<ul>
+<li>Foundation是通过bower载入的，所以Foundation的路径是<code>app/public/bower_components/foundation</code></li>
+<li>自定义的SCSS我选择放在<code>app/resource/scss</code>中</li>
+<li>编译后的CSS文件放在<code>app/public/style/scss</code>中</li>
+<li>所有CSS文件由<code>app/public/style/main.css</code>通过<code>@import</code>引入，html中只导入该css</li>
+</ul>
+<p>然后就是grunt的配置了</p>
+<ul>
+<li>首先得往系统中安装compass（需要ruby环境）：
+<code>gem install compass</code></li>
+<li>yeoman构建项目时，<code>package.json</code>中已含有<code>grunt-contrib-compass</code>插件，该插件可以对SCSS进行编译</li>
+<li><p>然后可以开始配置<code>Gruntfile.js</code>:</p>
+<pre><code class="lang-javascript">...
+grunt.initConfig({
+  ...
+  <span class="comment">//实时监控</span>
+  watch: {
+    ...   
+    compass: {
+              files: [<span class="string">'&lt;%= yeoman.app %&gt;/resource/scss/{,*/}*.{scss,sass}'</span>],<span class="comment">//监控的文件路径</span>
+              tasks: [<span class="string">'compass'</span>]<span class="comment">//若监控文件改动，执行的任务</span>
+          },
+    ...
+  },
+  <span class="comment">//compass配置</span>
+  comapss: {
+        <span class="comment">//全局配置</span>
+        options: {
+              sassDir: <span class="string">'&lt;%= yeoman.app %&gt;/resource/scss'</span>,
+              cssDir: <span class="string">'app/public/styles/scss'</span>,
+              imagesDir: <span class="string">'&lt;%= yeoman.app %&gt;/public/images'</span>,
+              javascriptsDir: <span class="string">'&lt;%= yeoman.app %&gt;/public//scripts'</span>,
+              fontsDir: <span class="string">'&lt;%= yeoman.app %&gt;/public/styles/fonts'</span>,
+              <span class="comment">//此处配置SCSS的引入源路径，我添加了foundation的SCSS路径和animate的SCSS路径</span>
+              importPath: [
+                  <span class="string">'&lt;%= yeoman.app %&gt;/public/bower_components'</span>,
+                  <span class="string">'&lt;%= yeoman.app %&gt;/public/bower_components/foundation/scss'</span>,
+                  <span class="string">'&lt;%= yeoman.app %&gt;/public/bower_components/animate.scss/source'</span>
+              ],
+              relativeAssets: <span class="literal">true</span>
+          },
+          <span class="comment">//局部配置，覆盖同名项</span>
+          dist: {},
+          server: {
+              options: {
+                  debugInfo: <span class="literal">true</span>
+              }
+          }
+  },
+  ...
+});
+
+<span class="comment">//往server任务中插入compass子任务，执行该任务命令为grunt server</span>
+grunt.registerTask(<span class="string">'server'</span>, [
+    ...<span class="comment">//其他任务,</span>
+    <span class="string">'compass:server'</span>,
+    ...<span class="comment">//其他任务</span>
+])
+...</code></pre>
+<p>在命令行中执行grunt server,即可实现SCSS的实施编译</p>
+</li>
+</ul>
+
+    </div>
+</section>

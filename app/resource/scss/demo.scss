@@ -1,0 +1,19 @@
+.demo{
+  width: 100%;
+  border: 2px solid #abc;
+  padding: emCalc(5);
+  box-sizing: border-box;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: emCalc(200);
+  -webkit-overflow-scrolling: touch;
+}
+.demo::-webkit-scrollbar{
+  display: none;
+}
+.demo *{
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}

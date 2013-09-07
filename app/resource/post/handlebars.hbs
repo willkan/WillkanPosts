@@ -1,0 +1,61 @@
+<section data-magellan-destination="{{href}}">
+    <a name="{{href}}"></a>
+    <div class="markdown">
+        <h2>HTML模版</h2>
+<p>在HTML和CSS框架部分我们已经完成了HTML框架的构建。</p>
+<p>下面我们开始使用HTML模版来编写网页需要模版。</p>
+<p>HTML模版引擎的好处这里就不说了，在非常多的模版引擎中我选择了Handlebars，仅仅是因为我喜欢这个模版。</p>
+<p>模版的编写就不说了，这部分主要还是描述如何模版文件的放置结构和实现模版的预编译。</p>
+<p>首先来看看目录结构</p>
+<ul>
+<li>模版文件我放置在<code>app/resource/templates</code>中, 后缀名是<code>.hbs</code></li>
+<li>自定义模版工具(就是helpers之类的东西)放置在<code>app/resource/templates/helpers</code>中</li>
+<li><code>.hbs</code>这些文件编译生成的文件我放置在<code>.tmp/templates</code>这临时文件夹中</li>
+<li>最后，把<code>.tmp/templates</code>中的文件和helpers连接在一起，生成<code>.tmp/template.js</code></li>
+</ul>
+<p>下面来看看预编译</p>
+<ul>
+<li><p>首先，为什么要预编译？</p>
+<p>模版文件并不能直接被js执行，需要经Handlebars解释成一个函数后才能被执行，也就是说浏览器得先执行模版解释，这对性能并不好的移动设备来说无疑带来了性能损耗。所以更好的做法是在服务器段就把这些模版文件预编译成可执行的函数。</p>
+</li>
+<li><p>那该怎么实现预编译呢？</p>
+<p>grunt这时候又来了。</p>
+<p>预编译Handlebars需要<code>grunt-contrib-handlebars</code>这个插件，载入方式还是在<code>package.json</code>中添加该项，然后<code>npm install</code></p>
+<p>那接下来看看这插件的配置(<code>grunt.initConfig()中的配置</code>)</p>
+<pre><code class="lang-javascript">handlebars: {
+          compile: {
+              options: {
+                  <span class="comment">//函数所在命名空间</span>
+                  namespace: <span class="string">"Handlebars.templates"</span>,
+                  <span class="comment">//函数名称格式</span>
+                  processName: <span class="function"><span class="keyword">function</span> <span class="params">(filename)</span> {</span>
+                      <span class="keyword">return</span> filename
+                          .replace(<span class="regexp">/app\/resource\/templates\//</span>, <span class="string">''</span>)
+                          .replace(<span class="regexp">/\.hbs$/</span>, <span class="string">''</span>);
+                  }
+              },
+              files: {
+                  <span class="comment">//'生成文件':[需要编译的模版文件]</span>
+                  <span class="string">'.tmp/templates/template.js'</span>: [<span class="string">'&lt;%= yeoman.app %&gt;/resource/templates/*.hbs'</span>]
+              }
+          }
+      }</code></pre>
+<p>上述代码实现下列转换(文件所在路径都是<code>app/resource/templates</code>)</p>
+<ul>
+<li>a.hbs-&gt;Handlebars.templates.a</li>
+<li>b.hbs-&gt;Handlebars.templates.b</li>
+</ul>
+</li>
+<li><p>把helpers也合并进来</p>
+<p>这里用到<code>grunt-contrib-concat</code>,注意文件连接顺序，应该是先连接helpers类文件，应为模版中可能会用到自定义的helper，只有先定义了helper，后面的模版函数才能正常执行</p>
+</li>
+<li><p>HTML引人预编译的文件</p>
+<p>预编译带来的好处还有一个：我们不再需要引入完整的handlebars.js和<code>.hbs</code>这类模版文件,只需要引入handlebars.runtime.js(和handlebars.js相比，没有模版解释函数)和预编译生成的文件<code>.tmp/template.js</code></p>
+</li>
+<li><p>实时编译监控</p>
+<p>我们可以添加监控的文件和任务以实现<code>.hbs</code>这类文件的实时编译，这样我们只要直接修改模版文件，并不会因为预编译而给调试修改带来麻烦。</p>
+</li>
+</ul>
+
+    </div>
+</section>

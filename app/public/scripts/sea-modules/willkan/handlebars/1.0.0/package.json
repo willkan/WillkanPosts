@@ -1,0 +1,16 @@
+{
+  "family": "willkan",
+  "name": "handlebars",
+  "version": "1.0.0",
+  "description": "modify for 1.0.0-rc3,the gallery/handlebars is for 1.0.0-rc4",
+  "homepage": "https://github.com/willkan/handlebarsCMD",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wycats/handlebars.js/"
+  },
+  "keywords": ["handlebars"],
+  "spm": {
+    "output": ["handlebars.js", "handlebars.runtime.js"]
+  }
+}

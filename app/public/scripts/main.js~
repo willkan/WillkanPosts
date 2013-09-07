@@ -1,0 +1,19 @@
+/*global MySingelPageApps, $*/
+
+
+window.MySingelPageApps = {
+    Models: {},
+    Collections: {},
+    Views: {},
+    Routers: {},
+    init: function () {
+        'use strict';
+        console.log('Hello from Backbone!');
+    }
+};
+
+$(document).ready(function () {
+    'use strict';
+    MySingelPageApps.init();
+    console.log(Handlebars["app/scripts/template/a.hbs"]({title:'asds'}));
+});

@@ -1,0 +1,55 @@
+<section data-magellan-destination="{{href}}">
+    <a name="{{href}}"></a>
+    <div class="markdown">
+        <h2>前端模块化</h2>
+<p>接下来让我们看看该如何组织js文件。</p>
+<p>以前我们引入js文件的方式是：</p>
+<pre><code class="lang-html"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">""</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
+<p>或者是用jQuery<code>$.ajax()</code></p>
+<p>但这些引入方式有一个致命缺陷就是文件依赖问题，我们更希望看到的是像java一样可以<code>import</code>，于是一部分前端的前辈们就致力于解决模块化问题。</p>
+<p>seajs(CMD规范)和requirejs(AMD规范)就是解决模块化问题比较好的两个库。</p>
+<p>二者的详细对比我就不说了，大家可以看看<a href="http://www.douban.com/note/283566440/">SeaJS与RequireJS最大的区别</a>。</p>
+<p>虽然模块化的确很有用，但无可否认目前大多数的库还是传统的写法（外国也有一部分库已支持AMD），也就是说需要这些s库进行人工CMD化或AMD化。国际上的一些比较著名的库我还没找到原生支持CMD，都需要人工CMD化。</p>
+<p>而我这次项目选择的是seajs，原因是二者在构建上都没有成熟的方案，seajs的生态圈更本地化（作者是玉伯大大），相比一堆英文的交流我更愿意用中文交流，也算是为国内前端生态圈尽一份力吧。</p>
+<p>{{{md-sub subs.sub1}}}</p>
+<h3>目录结构和seajs配置</h3>
+<p>我在这讲的主要是自己在使用seajs过程中遇到的问题和解决方案，想查看API者请移驾<a href="https://github.com/seajs/seajs/issues/266">https://github.com/seajs/seajs/issues/266</a>，如果玉伯大大看到这篇文章，容小弟稍微抱怨下用github作参考文档真心不太容易用。。。资料找起来还是挺费劲的。</p>
+<h4>目录结构</h4>
+<p>先规范一下scripts目录结构</p>
+<p><img src="/public/images/seajs1.png" alt="scripts目录结构"></p>
+<p>以下描述的相对路径是<code>app/public/scripts</code></p>
+<ul>
+<li><code>sea-modules</code>放置的是通过spm(下面会提到)加载的库</li>
+<li><code>example</code><ul>
+<li><code>example/logic</code>放置的是自己编写的逻辑模块</li>
+<li><code>example/utils</code>放置的是CMD化后的开源js库</li>
+<li><code>example/templates</code>放置的是CMD化后的模版文件(例如前文提到的app目录下的<code>.tmp/templates.js</code>,.tmp下的文件还未CMD化)</li>
+<li><code>example/static</code>放置的是已经CMD化的静态资源文件</li>
+</ul>
+</li>
+</ul>
+<h4>seajs配置</h4>
+<p>注意seajs的路径解释规则,请查看<a href="https://github.com/seajs/seajs/issues/258">模块标志</a></p>
+<p>这里注意<code>paths</code>中定义的路径就是其直接路径,并不会互相解释,例如</p>
+<pre><code class="lang-javascript">seajs.config({
+    <span class="comment">//base默认为'app/public/scripts/sea-modules'</span>
+    paths:{
+      scripts: <span class="string">'/public/scripts'</span>,
+      logic: <span class="string">'scripts/logic'</span> <span class="comment">//此处并不会被解释为'/public/scripts/logic',而是'app/scripts/sea-modules/logic'</span>
+    }
+});</code></pre>
+<p>此外paths的配置还应注意不应以&#39;/&#39;结尾(仅限2.1.1版本),详情请见<a href="https://github.com/seajs/seajs/issues/926">https://github.com/seajs/seajs/issues/926</a></p>
+<p>这个问题是因为使用seajs还应注意一个初学者不太能发现的<a href="https://github.com/seajs/seajs/issues/930">ID 和路径匹配原则</a></p>
+<p>{{{md-sub subs.sub2}}}</p>
+<h3>CMD化</h3>
+<p>seajs2.0开始推荐将所有js封装成CMD模块.</p>
+<p>对于非CMD的js我们需要对其进行封装,我说一下封装foundation.js这个文件(依赖dom选择器)</p>
+<pre><code class="lang-javascript">define(<span class="keyword">function</span>(require, exports, module){
+    <span class="keyword">var</span> $ = require(<span class="string">'$'</span>);<span class="comment">//写入依赖,需要再seajs配置中配置alias的$</span>
+    ...<span class="comment">//源代码</span>
+    <span class="keyword">return</span> Foundation;
+})</code></pre>
+<p>而对于类似于模板预编译成的文件,我建议使用grunt对其进行封装,<code>grunt-contrib-concat</code>支持对文件进行包装,这里不作描述</p>
+
+    </div>
+</section>

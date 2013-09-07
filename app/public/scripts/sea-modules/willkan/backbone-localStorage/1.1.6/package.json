@@ -1,0 +1,21 @@
+{
+  "family": "willkan",
+  "name": "backbone-localStorage",
+  "version": "1.1.6",
+  "description": "backbone.localStorage",
+  "homepage": "https://github.com/willkan/backbone.localStorage",
+  "author": "Jerome Gravel-Niquet <jeromegn@gmail.com> (http://jgn.me)",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jeromegn/Backbone.localStorage.git"
+  },
+  "keywords": ["backbone", "localStorage"],
+  "spm": {
+    "output": ["backbone.localStorage.js"],
+    "alias": {
+        "backbone": "backbone",
+        "underscore": "underscore"
+    }
+  }
+}
+

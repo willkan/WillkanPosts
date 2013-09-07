@@ -1,0 +1,37 @@
+{
+    "family": "willkan",
+    "name": "foundation",
+    "version": "4.3.1",
+    "description": "Make the main javasctips in Foundation from zurb follow CMD",
+    "homepage": "http://foundation.zurb.com",
+    "keywords": ["foundation"],
+    "author": "ZURB <foundation@zurb.com>",
+    "package": "https://github.com/zurb/foundation/blob/master/package.json",
+    "spm": {
+        "alias": {
+            "$": "$",
+            "foundation": "willkan/foundation/4.3.1/foundation/foundation"
+        },
+        "output": [
+            "foundation/foundation.js",
+            "foundation/foundation.abide.js",
+            "foundation/foundation.alerts.js",
+            "foundation/foundation.clearing.js",
+            "foundation/foundation.cookie.js",
+            "foundation/foundation.dropdown.js",
+            "foundation/foundation.forms.js",
+            "foundation/foundation.interchange.js",
+            "foundation/foundation.joyride.js",
+            "foundation/foundation.magellan.js",
+            "foundation/foundation.orbit.js",
+            "foundation/foundation.placeholder.js",
+            "foundation/foundation.reveal.js",
+            "foundation/foundation.section.js",
+            "foundation/foundation.tooltips.js",
+            "foundation/foundation.topbar.js",
+            "vendor/zepto.js",
+            "vendor/jquery.js",
+            "vendor/custom.modernizr.js"
+        ]
+    }
+}
