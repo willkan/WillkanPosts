@@ -43,3 +43,7 @@ define(function(require, exports, module){
         }
     });
 ```
+##调试与构建
+`grunt server` 用于调试网页
+
+`grunt build` 用于构建网页，构建路径为`diat`
