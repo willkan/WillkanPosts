@@ -1,6 +1,6 @@
 # WillkanPosts
 
-Static portfolio and public support site for Willkan Products. The homepage
+Static portfolio and public support site for howork products. The homepage
 summarizes released, validating, and in-development products without presenting
 unreleased work as purchasable. The same plain HTML/CSS source is published
 through GitHub Pages and the production container at `products.holic.work`.

@@ -1,4 +1,4 @@
-# Willkan Products homepage contract
+# howork products homepage contract
 
 The homepage is the public portfolio for products operated by Huikang Wang. It
 is not a blog index or a claim that every listed product is available for sale.
@@ -20,10 +20,11 @@ as released, purchasable, or hosted until that is true.
 
 ## Shared positioning
 
-Willkan Products builds focused digital products around concrete workflows.
-Some products include optional AI assistance, but AI is not a required or
-universal product feature. Product cards should lead with the user problem and
-usable capability, then disclose status and boundaries.
+The homepage leads with the concrete problems covered by the portfolio and the
+current availability of each product. Internal product-development principles
+and implementation philosophy do not belong in the hero. Product cards should
+lead with the user problem and usable capability, then disclose status and
+boundaries.
 
 ## Public navigation
 

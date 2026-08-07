@@ -75,15 +75,14 @@ main {
 }
 
 .hero {
-  min-height: 62vh;
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(220px, 0.65fr);
-  gap: 48px;
+  min-height: 52vh;
+  display: flex;
   align-items: center;
-  padding: 72px 0 44px;
+  padding: 72px 0 56px;
 }
 
 .hero-copy {
+  max-width: 900px;
   padding: 24px 0;
 }
 
@@ -122,46 +121,6 @@ h3 {
   margin: 24px 0 0;
   color: var(--muted);
   font-size: 19px;
-}
-
-.principles {
-  justify-self: end;
-  width: min(100%, 360px);
-  padding: 28px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--panel);
-  box-shadow: 0 24px 64px rgba(25, 32, 28, 0.08);
-}
-
-.principles-label {
-  margin: 0 0 18px;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-.principles ol {
-  display: grid;
-  gap: 0;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.principles li {
-  display: grid;
-  grid-template-columns: 42px 1fr;
-  gap: 10px;
-  padding: 16px 0;
-  border-top: 1px solid var(--line);
-}
-
-.principles li span {
-  color: var(--accent);
-  font-size: 13px;
-  font-weight: 800;
 }
 
 .actions {
@@ -449,10 +408,6 @@ h3 {
 
   .copy h1 {
     font-size: 36px;
-  }
-
-  .principles {
-    justify-self: stretch;
   }
 
   .grid,

@@ -59,3 +59,12 @@ test("homepage exposes real destinations without placeholder product links", () 
   assert.match(home, /\.\/shelf-life\/privacy\//);
   assert.doesNotMatch(home, /href=["']#["']/);
 });
+
+test("public pages use the howork products brand without internal principles", () => {
+  for (const page of [home, terms, privacy]) {
+    assert.match(page, /howork products/);
+    assert.doesNotMatch(page, /Willkan Products/);
+  }
+  assert.doesNotMatch(home, /产品原则/);
+  assert.doesNotMatch(home, /每款产品先解决一条真实工作流/);
+});
