@@ -1,8 +1,9 @@
 # WillkanPosts
 
-Static site for public product support pages and selected public notes. The same
-plain HTML/CSS source is published through GitHub Pages and the production
-container at `products.holic.work`.
+Static portfolio and public support site for Willkan Products. The homepage
+summarizes released, validating, and in-development products without presenting
+unreleased work as purchasable. The same plain HTML/CSS source is published
+through GitHub Pages and the production container at `products.holic.work`.
 
 ## URLs
 
@@ -14,6 +15,9 @@ container at `products.holic.work`.
 - Site privacy policy: https://products.holic.work/privacy/
 
 The site is intentionally plain HTML/CSS so GitHub Pages can serve it from the repository root without a build step.
+
+The homepage product inventory and status wording are governed by
+[`docs/HOMEPAGE.md`](docs/HOMEPAGE.md).
 
 Run the public-page contract checks with `npm test`.
 

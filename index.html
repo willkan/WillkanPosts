@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="waffo-verify" content="a85861a30171033bb56d692431eeac66">
-    <title>Willkan Posts</title>
-    <meta name="description" content="Willkan 的公开产品支持页、隐私政策和工作笔记。">
+    <title>Willkan Products — focused software for real workflows</title>
+    <meta name="description" content="Willkan Products 的产品组合：老纳、QuoteToReturn 与开发中的清简账本。">
     <link rel="stylesheet" href="./assets/site.css">
   </head>
   <body>
@@ -13,10 +13,9 @@
       <nav class="nav" aria-label="Main navigation">
         <a class="brand" href="./">Willkan Products</a>
         <div class="nav-links">
-          <a href="./shelf-life/support/">老纳支持</a>
-          <a href="./shelf-life/privacy/">隐私政策</a>
+          <a href="#products">产品</a>
           <a href="./terms/">服务条款</a>
-          <a href="./privacy/">站点隐私</a>
+          <a href="./privacy/">隐私政策</a>
           <a href="mailto:313238485@qq.com">联系</a>
         </div>
       </nav>
@@ -24,46 +23,102 @@
 
     <main>
       <section class="hero">
-        <div>
-          <p class="eyebrow">Public pages for products and notes</p>
-          <h1>把支持、隐私和交付记录放到一个稳定入口。</h1>
+        <div class="hero-copy">
+          <p class="eyebrow">FOCUSED PRODUCTS · HONEST BOUNDARIES</p>
+          <h1>从具体问题出发，做完整、可用的产品。</h1>
           <p class="lead">
-            这个站点托管公开可访问的产品说明。当前重点是 iOS App「老纳」的 App Store 审核所需页面：支持页和隐私政策页。
+            Willkan Products 持续开发面向个人与小团队的数字产品。每款产品先解决一条真实工作流；需要 AI 时，让它在清晰边界内辅助，而不是把复杂度交给用户。
           </p>
           <div class="actions">
-            <a class="button primary" href="./shelf-life/support/">打开老纳支持页</a>
-            <a class="button" href="./shelf-life/privacy/">打开隐私政策</a>
+            <a class="button primary" href="#products">查看产品</a>
+            <a class="button" href="mailto:313238485@qq.com">联系开发者</a>
           </div>
         </div>
-        <figure class="hero-visual">
-          <img class="app-icon" src="./assets/shelf-life-icon.png" alt="老纳 App icon">
-          <figcaption class="visual-caption">老纳：面向个人和家庭的保质期收纳与过期提醒工具。</figcaption>
-        </figure>
+        <aside class="principles" aria-label="Product principles">
+          <p class="principles-label">产品原则</p>
+          <ol>
+            <li><span>01</span>先提供能直接使用的完整基线</li>
+            <li><span>02</span>清楚标示能力、限制与发布状态</li>
+            <li><span>03</span>只在真正有帮助时引入 AI</li>
+          </ol>
+        </aside>
       </section>
 
-      <section class="section">
-        <h2>公开页面</h2>
-        <div class="grid">
-          <article class="tile">
-            <h3>老纳支持</h3>
-            <p>功能说明、常见问题、联系邮箱和问题反馈入口。</p>
-            <a href="./shelf-life/support/">查看支持页</a>
+      <section class="section product-section" id="products">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">PRODUCTS</p>
+            <h2>正在做的产品</h2>
+          </div>
+          <p>上线、验证和开发状态分别标明；没有用“即将上线”掩盖尚未完成的交付。</p>
+        </div>
+
+        <article class="product-card product-card-featured">
+          <div class="product-identity">
+            <img class="product-icon" src="./assets/shelf-life-icon.png" alt="老纳 App 图标">
+            <div>
+              <span class="status status-live">支持页面已上线</span>
+              <p class="product-number">01 · iOS APP</p>
+              <h3>老纳 <span>Shelf Life</span></h3>
+            </div>
+          </div>
+          <div class="product-summary">
+            <p class="product-pitch">把家里的食品、药品和日用品收纳位置与过期时间记清楚。</p>
+            <p>记录物品、位置、分类、照片和过期日；通过 iCloud 私有库同步，并在授权后写入系统日历提醒。</p>
+            <div class="product-links">
+              <a href="./shelf-life/support/">产品支持</a>
+              <a href="./shelf-life/privacy/">专属隐私政策</a>
+            </div>
+          </div>
+        </article>
+
+        <div class="product-grid">
+          <article class="product-card">
+            <div>
+              <span class="status status-validation">产品验证中</span>
+              <p class="product-number">02 · HOSTED SAAS</p>
+              <h3>QuoteToReturn</h3>
+            </div>
+            <div class="product-summary">
+              <p class="product-pitch">面向小型活动租赁团队，从报价到归还的一套完整业务基线。</p>
+              <p>覆盖库存与档期、报价、订金、取送货、归还、损坏记录和客户文档。内置 Agent 只生成受边界约束的配置草稿，由用户预览、验证和批准。</p>
+              <ul class="feature-list">
+                <li>先直接使用，再按需定制</li>
+                <li>单一维护内核，不为客户分叉代码</li>
+                <li>计划价格：USD $39/月</li>
+              </ul>
+              <p class="availability">尚未开放购买 · 当前为交互原型与 Sandbox 订阅验证</p>
+            </div>
           </article>
-          <article class="tile">
-            <h3>老纳隐私政策</h3>
-            <p>说明本机数据、iCloud 私有库、系统日历权限和联系支持时的数据处理。</p>
-            <a href="./shelf-life/privacy/">查看隐私政策</a>
-          </article>
-          <article class="tile">
-            <h3>公开笔记方向</h3>
-            <p>后续可放经过整理的工作笔记，主题聚焦状态可追踪、上线可控和验收闭环。</p>
+
+          <article class="product-card">
+            <div>
+              <span class="status status-building">开发中 · 尚未发布</span>
+              <p class="product-number">03 · IOS &amp; ANDROID</p>
+              <h3>清简账本</h3>
+            </div>
+            <div class="product-summary">
+              <p class="product-pitch">像写日记一样记账，让系统完成提取、计算与整理。</p>
+              <p>自然语言或设备端语音录入，AI 只提出结构化建议；账目、统计和 Excel 导出以设备上的加密本地账本为准。</p>
+              <ul class="feature-list">
+                <li>单设备、单人、单账本</li>
+                <li>完整账本不发送给 AI</li>
+                <li>用户自备 OpenAI 兼容模型密钥</li>
+              </ul>
+              <p class="availability">尚无公开下载或购买入口</p>
+            </div>
           </article>
         </div>
       </section>
 
       <section class="section">
-        <h2>服务与法律信息</h2>
-        <div class="grid">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">TRUST</p>
+            <h2>服务与法律信息</h2>
+          </div>
+        </div>
+        <div class="grid legal-grid">
           <article class="tile">
             <h3>服务条款</h3>
             <p>适用于通过本站展示和销售的数字产品及订阅服务。</p>
@@ -73,6 +128,11 @@
             <h3>站点隐私政策</h3>
             <p>说明网站、产品账户、支持沟通和 Waffo Pancake 支付元数据的处理方式。</p>
             <a href="./privacy/">查看站点隐私政策</a>
+          </article>
+          <article class="tile contact-tile">
+            <h3>产品支持</h3>
+            <p>遇到问题、需要数据请求，或想了解产品状态，可以直接发送邮件。</p>
+            <a href="mailto:313238485@qq.com">313238485@qq.com</a>
           </article>
         </div>
       </section>
