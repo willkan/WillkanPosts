@@ -74,3 +74,8 @@ test("homepage copy contains no internal architecture or validation jargon", () 
   assert.doesNotMatch(home, /单一维护内核|分叉代码|Sandbox|订阅验证/);
   assert.doesNotMatch(terms, /product kernels/);
 });
+
+test("homepage hero does not narrate the catalog or explain the page", () => {
+  assert.doesNotMatch(home, /我们正在做三款产品|下面会写清楚|每张卡片都标明/);
+  assert.match(home, /howork products 为个人和小团队开发简单、可靠的软件/);
+});

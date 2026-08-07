@@ -26,6 +26,10 @@ know, and whether it can currently be used or purchased. Architecture terms,
 internal validation language, and product-development philosophy do not belong
 in public product copy.
 
+The hero states the brand's customer value. It must not enumerate the catalog,
+narrate what appears below, explain the page structure, or restate the status
+labels already shown on product cards.
+
 ## Public navigation
 
 The homepage must link to the existing Shelf Life support/privacy pages and the
