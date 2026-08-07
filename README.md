@@ -13,6 +13,7 @@ through GitHub Pages and the production container at `products.holic.work`.
 - Production: https://products.holic.work/
 - Site terms: https://products.holic.work/terms/
 - Site privacy policy: https://products.holic.work/privacy/
+- QuoteToReturn preview: https://products.holic.work/quote-to-return/
 
 The site is intentionally plain HTML/CSS so GitHub Pages can serve it from the repository root without a build step.
 

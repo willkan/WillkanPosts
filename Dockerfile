@@ -6,6 +6,7 @@ COPY assets/ /usr/share/nginx/html/assets/
 COPY shelf-life/ /usr/share/nginx/html/shelf-life/
 COPY terms/ /usr/share/nginx/html/terms/
 COPY privacy/ /usr/share/nginx/html/privacy/
+COPY quote-to-return/ /usr/share/nginx/html/quote-to-return/
 
 EXPOSE 80
 

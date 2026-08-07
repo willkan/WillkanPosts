@@ -6,6 +6,8 @@ const terms = await readFile(new URL("../terms/index.html", import.meta.url), "u
 const privacy = await readFile(new URL("../privacy/index.html", import.meta.url), "utf8");
 const home = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const dockerfile = await readFile(new URL("../Dockerfile", import.meta.url), "utf8");
+const quoteToReturn = await readFile(new URL("../quote-to-return/index.html", import.meta.url), "utf8");
+const quoteToReturnDemo = await readFile(new URL("../quote-to-return/demo/app.js", import.meta.url), "utf8");
 
 test("site-level legal pages identify the operator and monitored contact", () => {
   for (const page of [terms, privacy]) {
@@ -78,4 +80,23 @@ test("homepage copy contains no internal architecture or validation jargon", () 
 test("homepage hero does not narrate the catalog or explain the page", () => {
   assert.doesNotMatch(home, /我们正在做三款产品|下面会写清楚|每张卡片都标明/);
   assert.match(home, /howork products 为个人和小团队开发简单、可靠的软件/);
+});
+
+test("QuoteToReturn has a real public destination from the homepage", () => {
+  assert.match(home, /\.\/quote-to-return\//);
+  assert.match(quoteToReturn, /Interactive QuoteToReturn demo/);
+  assert.match(quoteToReturn, /\.\/demo\/index\.html\?variant=A/);
+  assert.match(dockerfile, /COPY quote-to-return\/ \/usr\/share\/nginx\/html\/quote-to-return\//);
+});
+
+test("QuoteToReturn states the planned price without accepting payment", () => {
+  assert.match(quoteToReturn, /<sup>\$<\/sup>39 <span>per month/);
+  assert.match(quoteToReturn, /Not available for purchase yet/);
+  assert.match(quoteToReturn, /No payment will be collected from this page/);
+  assert.doesNotMatch(quoteToReturn, /Paddle|Waffo|data-subscribe|checkout\.open/i);
+});
+
+test("QuoteToReturn public copy excludes internal implementation language", () => {
+  assert.doesNotMatch(quoteToReturn, /kernel|code forks|bounded draft|raw SQL|Sandbox|hosted runtime/i);
+  assert.doesNotMatch(quoteToReturnDemo, /rental kernel|Capability boundary|Throwaway UI prototype/i);
 });
