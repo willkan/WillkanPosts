@@ -1,0 +1,5 @@
+.git
+.github
+.DS_Store
+README.md
+deploy/docker-compose.yml

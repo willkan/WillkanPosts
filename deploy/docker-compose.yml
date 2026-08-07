@@ -1,0 +1,12 @@
+services:
+  website:
+    image: ${IMAGE_REPOSITORY:?IMAGE_REPOSITORY is required}:${IMAGE_TAG:?IMAGE_TAG is required}
+    container_name: willkan-posts
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:18081:80"
+    logging:
+      driver: journald
+      options:
+        tag: willkan-posts
+        labels: service,frontend
