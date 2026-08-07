@@ -20,11 +20,11 @@ as released, purchasable, or hosted until that is true.
 
 ## Shared positioning
 
-The homepage leads with the concrete problems covered by the portfolio and the
-current availability of each product. Internal product-development principles
-and implementation philosophy do not belong in the hero. Product cards should
-lead with the user problem and usable capability, then disclose status and
-boundaries.
+The homepage uses ordinary customer language. It describes what each product
+helps someone do, its main functions, any setup requirement the customer must
+know, and whether it can currently be used or purchased. Architecture terms,
+internal validation language, and product-development philosophy do not belong
+in public product copy.
 
 ## Public navigation
 

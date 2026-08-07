@@ -49,7 +49,7 @@ test("homepage presents the complete product portfolio with honest statuses", ()
   assert.match(home, /QuoteToReturn/);
   assert.match(home, /清简账本/);
   assert.match(home, /支持页面已上线/);
-  assert.match(home, /产品验证中/);
+  assert.match(home, /尚未开放购买/);
   assert.match(home, /尚未开放购买/);
   assert.match(home, /开发中 · 尚未发布/);
 });
@@ -67,4 +67,10 @@ test("public pages use the howork products brand without internal principles", (
   }
   assert.doesNotMatch(home, /产品原则/);
   assert.doesNotMatch(home, /每款产品先解决一条真实工作流/);
+});
+
+test("homepage copy contains no internal architecture or validation jargon", () => {
+  assert.doesNotMatch(home, /业务基线|配置草稿|结构化建议|本地账本为准/);
+  assert.doesNotMatch(home, /单一维护内核|分叉代码|Sandbox|订阅验证/);
+  assert.doesNotMatch(terms, /product kernels/);
 });
