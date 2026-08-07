@@ -4,6 +4,8 @@ COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf
 COPY index.html robots.txt /usr/share/nginx/html/
 COPY assets/ /usr/share/nginx/html/assets/
 COPY shelf-life/ /usr/share/nginx/html/shelf-life/
+COPY terms/ /usr/share/nginx/html/terms/
+COPY privacy/ /usr/share/nginx/html/privacy/
 
 EXPOSE 80
 

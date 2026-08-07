@@ -10,8 +10,12 @@ container at `products.holic.work`.
 - 老纳 support: https://willkan.github.io/WillkanPosts/shelf-life/support/
 - 老纳 privacy policy: https://willkan.github.io/WillkanPosts/shelf-life/privacy/
 - Production: https://products.holic.work/
+- Site terms: https://products.holic.work/terms/
+- Site privacy policy: https://products.holic.work/privacy/
 
 The site is intentionally plain HTML/CSS so GitHub Pages can serve it from the repository root without a build step.
+
+Run the public-page contract checks with `npm test`.
 
 ## Production deployment
 
