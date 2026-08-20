@@ -49,11 +49,11 @@ test("home and production image publish both legal URLs", () => {
 test("homepage presents the complete product portfolio with honest statuses", () => {
   assert.match(home, /老纳/);
   assert.match(home, /QuoteToReturn/);
-  assert.match(home, /清简账本/);
+  assert.match(home, /花哪/);
   assert.match(home, /支持页面已上线/);
   assert.match(home, /尚未开放购买/);
   assert.match(home, /尚未开放购买/);
-  assert.match(home, /开发中 · 尚未发布/);
+  assert.match(home, /Android 已发布 · iPhone 上架中/);
 });
 
 test("homepage exposes real destinations without placeholder product links", () => {

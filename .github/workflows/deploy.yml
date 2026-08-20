@@ -33,6 +33,16 @@ jobs:
           username: ${{ secrets.ALIYUN_DOCKER_USERNAME }}
           password: ${{ secrets.ALIYUN_DOCKER_PASSWORD }}
 
+      - name: Fetch verified 花哪 Android release
+        env:
+          HUANA_APK_SHA256: 322c40d5e2802e9f95adc2ab97de745788fedb4e9664cb6ef1e0d8e2a8faa83e
+        run: |
+          curl --fail --location --retry 3 \
+            --output .release/huana-1.0.0.apk \
+            https://github.com/willkan/ho-bookkeeping/releases/download/v1.0.0/huana-1.0.0.apk
+          printf '%s  %s\n' "$HUANA_APK_SHA256" .release/huana-1.0.0.apk |
+            sha256sum --check
+
       - name: Build and push image
         uses: docker/build-push-action@v7
         with:
