@@ -50,6 +50,7 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
+          provenance: false
           tags: ${{ env.IMAGE_REPOSITORY }}:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
